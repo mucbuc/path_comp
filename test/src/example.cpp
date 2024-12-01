@@ -1,8 +1,8 @@
 #include <iostream>
 #include <sstream>
 
-// #include <cassert>
-// #define ASSERT(p) assert((p))
+#include <cassert>
+#define ASSERT(p) assert((p))
 
 #include <path_comp/src/gen_svg.hpp>
 #include <path_comp/src/interface.hpp>
