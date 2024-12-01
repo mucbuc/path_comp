@@ -1,9 +1,8 @@
-# path-comp
-path composition utility
+#pragma once
 
-# interface
+#include <array>
+#include <vector>
 
-```
 namespace path_comp {
 
 template <typename value_type>
@@ -37,6 +36,8 @@ struct Builder {
     template <typename T, typename U, typename V>
     void traverse(T on_loop_begin, U on_segment_end, V on_loop_end) const;
 
+    std::ostream& write_point_at(size_t index, std::ostream&) const;
+
     Span<scalar_type> points() const;
     Span<size_t> segments() const;
     Span<size_t> loops() const;
@@ -48,5 +49,11 @@ private:
     std::vector<size_t> m_loops;
     std::vector<index_type> m_indecies;
 };
+
+template <typename T>
+std::string make_html_path(const Builder<T, 2>& builder, std::string name);
+
+#include "impl.hpp"
+#include "make_html_path.hpp"
+
 } // path_comp
-```
