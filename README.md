@@ -1,4 +1,4 @@
-# path-comp
+# path_comp
 path composition utility
 
 # interface
