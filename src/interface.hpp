@@ -51,9 +51,9 @@ private:
 };
 
 template <typename T>
-std::string make_svg(const Builder<T, 2>& builder, std::string name);
+std::string make_html_path(const Builder<T, 2>& builder, std::string name);
 
 #include "impl.hpp"
-#include "make_svg.hpp"
+#include "make_html_path.hpp"
 
 } // path_comp
