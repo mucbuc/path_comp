@@ -6,20 +6,19 @@
 using namespace std;
 namespace path_comp {
 
-namespace private_path_comp
-{
+namespace private_path_comp {
 
-template <typename T, typename U>
-static void start_loop(const T & builder, size_t begin, U id, ostream& result);
+    template <typename T, typename U>
+    static void start_loop(const T& builder, size_t begin, U id, ostream& result);
 
-static void end_loop(ostream& result);
+    static void end_loop(ostream& result);
 
-template <typename T>
-static void end_segment(const T & builder, size_t begin, size_t end, ostream& result);
+    template <typename T>
+    static void end_segment(const T& builder, size_t begin, size_t end, ostream& result);
 
 } // private_path_comp
 
-template<typename T>
+template <typename T>
 std::string gen_svg(const path_comp::Builder<T, 2>& builder, std::string name)
 {
     using namespace private_path_comp;
@@ -38,49 +37,47 @@ std::string gen_svg(const path_comp::Builder<T, 2>& builder, std::string name)
     return result.str();
 }
 
-namespace private_path_comp
-{
+namespace private_path_comp {
 
-template <typename T, typename U>
-void start_loop(const T & builder, size_t begin, U id, ostream& result)
-{
-    result << "<path id=\"" << id << "\" d=\"M";
-    builder.write_point_at(begin, result);
-}
-
-void end_loop(ostream& result)
-{
-    result << "Z\"";
-    result << "/>\n";
-}
-
-template <typename T>
-void end_segment(const T & builder, size_t begin, size_t end, ostream& result)
-{
-    switch (end - begin) {
-    case 1:
-        result << "L";
-        break;
-    case 2:
-        result << "C";
-        break;
-    case 3:
-        result << "Q";
-        break;
-    default:
-        ASSERT(false);
+    template <typename T, typename U>
+    void start_loop(const T& builder, size_t begin, U id, ostream& result)
+    {
+        result << "<path id=\"" << id << "\" d=\"M";
+        builder.write_point_at(begin, result);
     }
 
-    builder.write_point_at(begin, result);
-    ++begin;
-    while (begin != end) {
-        result << ", ";
+    void end_loop(ostream& result)
+    {
+        result << "Z\"";
+        result << "/>\n";
+    }
+
+    template <typename T>
+    void end_segment(const T& builder, size_t begin, size_t end, ostream& result)
+    {
+        switch (end - begin) {
+        case 1:
+            result << "L";
+            break;
+        case 2:
+            result << "C";
+            break;
+        case 3:
+            result << "Q";
+            break;
+        default:
+            ASSERT(false);
+        }
+
         builder.write_point_at(begin, result);
         ++begin;
+        while (begin != end) {
+            result << ", ";
+            builder.write_point_at(begin, result);
+            ++begin;
+        }
     }
-}
 
 } // private_path_comp
-
 
 }
