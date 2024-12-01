@@ -1,9 +1,8 @@
-# path-comp
-path composition utility
+#pragma once
 
-# interface
+#include <array>
+#include <vector>
 
-```
 namespace path_comp {
 
 template <typename value_type>
@@ -48,5 +47,7 @@ private:
     std::vector<size_t> m_loops;
     std::vector<index_type> m_indecies;
 };
+
+#include "impl.hpp"
+
 } // path_comp
-```
