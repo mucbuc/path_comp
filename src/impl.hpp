@@ -10,6 +10,13 @@ struct Vector_Builder<2> {
     {
         return { p[0], p[1] };
     }
+
+    template <class T>
+    static std::ostream& write_vector(T p, std::ostream& o)
+    {
+        o << p[0] << " " << p[1];
+        return o;
+    }
 };
 
 template <>
@@ -18,6 +25,13 @@ struct Vector_Builder<3> {
     static std::array<T, 3> make_vector(T* p)
     {
         return { p[0], p[1], p[2] };
+    }
+
+    template <class T>
+    static std::ostream& write_vector(T p, std::ostream& o)
+    {
+        o << p[0] << " " << p[1] << " " << p[2];
+        return o;
     }
 };
 
@@ -122,12 +136,12 @@ template <typename scalar_type, int rank, typename index_type>
 template <typename T, typename U, typename V>
 void Builder<scalar_type, rank, index_type>::traverse(T on_loop_begin, U on_segment_end, V on_loop_end) const
 {
+    ASSERT(m_indecies.size() == m_loops.size());
+
     for (
         size_t loop_index = 0, segment_index = 0, point_index = 0;
         loop_index < m_loops.size();
         ++loop_index) {
-
-        ASSERT(loop_index < m_indecies.size());
 
         on_loop_begin(point_index, m_indecies[loop_index]);
 
@@ -142,4 +156,11 @@ void Builder<scalar_type, rank, index_type>::traverse(T on_loop_begin, U on_segm
 
         on_loop_end(point_begin);
     }
+}
+
+template <typename scalar_type, int rank, typename index_type>
+std::ostream& Builder<scalar_type, rank, index_type>::write_vector(size_t index, std::ostream& out) const
+{
+
+    return Vector_Builder<rank>::write_vector(m_points[index].data(), out);
 }

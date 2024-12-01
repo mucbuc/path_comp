@@ -1,29 +1,26 @@
+#include <cassert>
+#define ASSERT(p) assert((p));
+
 #include "gen_svg.hpp"
 
 #include <iostream>
 #include <sstream>
 
-#include <cassert>
-#define ASSERT(p) assert((p))
-
-#include "interface.hpp"
-
 using namespace std;
 
 namespace {
 
-using builder_type = path_comp::Builder<float, 2>;
+enum { rank = 2 };
+
+using builder_type = path_comp::Builder<float, rank>;
 using Loop = builder_type::Loop;
-using vt = std::array<float, 2>;
+using vt = std::array<float, rank>;
 
 template <typename T, typename U>
 static void start_loop(const builder_type& builder, T begin, U id, ostream& result)
 {
     result << "<path id=\"" << id << "\" d=\"M";
-
-    const auto p = begin * 2;
-    result << builder.points().data[p] << " ";
-    result << builder.points().data[p + 1] << " ";
+    builder.write_vector(begin, result);
 }
 
 static void end_loop(ostream& result)
@@ -49,12 +46,11 @@ static void end_segment(const builder_type& builder, T begin, T end, ostream& re
         ASSERT(false);
     }
 
-    const auto& points { builder.points() };
-    auto pos = 2 * begin;
-    result << points.data[pos++] << " " << points.data[pos++];
+    builder.write_vector(begin, result);
     ++begin;
     while (begin != end) {
-        result << ", " << points.data[pos++] << " " << points.data[pos++];
+        result << ", ";
+        builder.write_vector(begin, result);
         ++begin;
     }
 }
