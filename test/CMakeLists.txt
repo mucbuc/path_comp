@@ -20,5 +20,3 @@ if (EMSCRIPTEN)
 endif()
 
 target_include_directories(path_comp_sample SYSTEM PUBLIC lib)
-
-#target_link_libraries(path_comp_sample PUBLIC path_comp)

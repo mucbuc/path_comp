@@ -4,7 +4,6 @@
 #include <cassert>
 #define ASSERT(p) assert((p))
 
-#include <path_comp/src/gen_svg.hpp>
 #include <path_comp/src/interface.hpp>
 
 using namespace std;
@@ -29,7 +28,7 @@ void test_loop()
                  .line(vt { { 11, 12 } }.data()),
         21);
 
-    cout << gen_svg(b, "triangle_") << std::endl;
+    cout << make_svg(b, "triangle_") << std::endl;
 }
 
 static void test_svg()
@@ -40,7 +39,7 @@ static void test_svg()
                  .line(vt { { 10, 60 } }.data())
                  .line(vt { { 10, 30 } }.data()));
 
-    cout << gen_svg(b, "triangle_") << std::endl;
+    cout << make_svg(b, "triangle_") << std::endl;
 }
 
 static void test_new_API()

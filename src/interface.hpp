@@ -50,6 +50,10 @@ private:
     std::vector<index_type> m_indecies;
 };
 
+template <typename T>
+std::string make_svg(const Builder<T, 2>& builder, std::string name);
+
 #include "impl.hpp"
+#include "make_svg.hpp"
 
 } // path_comp
