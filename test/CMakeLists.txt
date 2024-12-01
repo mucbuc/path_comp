@@ -4,7 +4,6 @@ project(path_comp_sample)
 
 add_executable(path_comp_sample
     src/example.cpp
-    src/utils.hpp
 )
 set_target_properties(path_comp_sample PROPERTIES
     CXX_STANDARD 20
@@ -22,4 +21,4 @@ endif()
 
 target_include_directories(path_comp_sample SYSTEM PUBLIC lib)
 
-target_link_libraries(path_comp_sample PUBLIC path_comp)
+#target_link_libraries(path_comp_sample PUBLIC path_comp)
