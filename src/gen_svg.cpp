@@ -20,7 +20,7 @@ template <typename T, typename U>
 static void start_loop(const builder_type& builder, T begin, U id, ostream& result)
 {
     result << "<path id=\"" << id << "\" d=\"M";
-    builder.write_vector(begin, result);
+    builder.write_point_at(begin, result);
 }
 
 static void end_loop(ostream& result)
@@ -46,11 +46,11 @@ static void end_segment(const builder_type& builder, T begin, T end, ostream& re
         ASSERT(false);
     }
 
-    builder.write_vector(begin, result);
+    builder.write_point_at(begin, result);
     ++begin;
     while (begin != end) {
         result << ", ";
-        builder.write_vector(begin, result);
+        builder.write_point_at(begin, result);
         ++begin;
     }
 }

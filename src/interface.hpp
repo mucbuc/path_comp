@@ -36,7 +36,7 @@ struct Builder {
     template <typename T, typename U, typename V>
     void traverse(T on_loop_begin, U on_segment_end, V on_loop_end) const;
 
-    std::ostream& write_vector(size_t index, std::ostream&) const;
+    std::ostream& write_point_at(size_t index, std::ostream&) const;
 
     Span<scalar_type> points() const;
     Span<size_t> segments() const;

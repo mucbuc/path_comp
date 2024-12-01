@@ -159,7 +159,7 @@ void Builder<scalar_type, rank, index_type>::traverse(T on_loop_begin, U on_segm
 }
 
 template <typename scalar_type, int rank, typename index_type>
-std::ostream& Builder<scalar_type, rank, index_type>::write_vector(size_t index, std::ostream& out) const
+std::ostream& Builder<scalar_type, rank, index_type>::write_point_at(size_t index, std::ostream& out) const
 {
 
     return Vector_Builder<rank>::write_vector(m_points[index].data(), out);
