@@ -1,7 +1,7 @@
 #pragma once
 
 #include "interface.hpp"
-#include <string>
+#include <sstream>
 
 using namespace std;
 

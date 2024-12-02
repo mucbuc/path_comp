@@ -1,6 +1,8 @@
 #pragma once
 
 #include <array>
+#include <ostream>
+#include <string>
 #include <vector>
 
 namespace path_comp {
