@@ -74,7 +74,7 @@ Span<scalar_type> Builder<scalar_type, rank, index_type>::Loop::points() const
 }
 
 template <typename scalar_type, int rank, typename index_type>
-Span<size_t> Builder<scalar_type, rank, index_type>::Loop::segments() const
+Span<index_type> Builder<scalar_type, rank, index_type>::Loop::segments() const
 {
     return { m_segments.data(), m_segments.size() };
 }
@@ -115,13 +115,13 @@ Span<scalar_type> Builder<scalar_type, rank, index_type>::points() const
 }
 
 template <typename scalar_type, int rank, typename index_type>
-Span<size_t> Builder<scalar_type, rank, index_type>::segments() const
+Span<index_type> Builder<scalar_type, rank, index_type>::segments() const
 {
     return { m_segments.data(), m_segments.size() };
 }
 
 template <typename scalar_type, int rank, typename index_type>
-Span<size_t> Builder<scalar_type, rank, index_type>::loops() const
+Span<index_type> Builder<scalar_type, rank, index_type>::loops() const
 {
     return { m_loops.data(), m_loops.size() };
 }
@@ -139,13 +139,13 @@ void Builder<scalar_type, rank, index_type>::traverse(T on_loop_begin, U on_segm
     ASSERT(m_indecies.size() == m_loops.size());
 
     for (
-        size_t loop_index = 0, segment_index = 0, point_index = 0;
+        index_type loop_index = 0, segment_index = 0, point_index = 0;
         loop_index < m_loops.size();
         ++loop_index) {
 
         on_loop_begin(point_index, m_indecies[loop_index]);
 
-        const size_t point_begin { point_index };
+        const index_type point_begin { point_index };
         ++point_index;
         for (; segment_index != m_loops[loop_index]; ++segment_index) {
 
@@ -161,6 +161,5 @@ void Builder<scalar_type, rank, index_type>::traverse(T on_loop_begin, U on_segm
 template <typename scalar_type, int rank, typename index_type>
 std::ostream& Builder<scalar_type, rank, index_type>::write_point_at(size_t index, std::ostream& out) const
 {
-
     return Vector_Builder<rank>::write_vector(m_points[index].data(), out);
 }

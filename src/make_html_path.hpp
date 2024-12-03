@@ -7,8 +7,8 @@ using namespace std;
 
 namespace private_path_comp {
 
-template <typename T, typename U>
-static void start_loop(const T& builder, size_t begin, U id, ostream& result)
+template <typename T, typename U, typename V>
+static void start_loop(const T& builder, U begin, V id, ostream& result)
 {
     result << "<path id=\"" << id << "\" d=\"M";
     builder.write_point_at(begin, result);
@@ -20,8 +20,8 @@ static void end_loop(ostream& result)
     result << "/>\n";
 }
 
-template <typename T>
-static void end_segment(const T& builder, size_t begin, size_t end, ostream& result)
+template <typename T, typename U>
+static void end_segment(const T& builder, U begin, U end, ostream& result)
 {
     switch (end - begin) {
     case 1:
