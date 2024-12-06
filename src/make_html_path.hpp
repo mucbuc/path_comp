@@ -28,10 +28,10 @@ static void end_segment(const T& builder, U begin, U end, ostream& result)
         result << "L";
         break;
     case 2:
-        result << "C";
+        result << "Q";
         break;
     case 3:
-        result << "Q";
+        result << "C";
         break;
     default:
         ASSERT(false);
