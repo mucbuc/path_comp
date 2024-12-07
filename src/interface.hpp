@@ -1,6 +1,7 @@
 #pragma once
 
 #include <array>
+#include <iostream>
 #include <ostream>
 #include <string>
 #include <vector>
@@ -32,6 +33,8 @@ struct Builder {
         Span<index_type> segments() const;
     };
 
+    Builder();
+
     void append(const Loop& l);
     void append(const Loop& l, index_type);
 
@@ -46,10 +49,8 @@ struct Builder {
     Span<index_type> indecies() const;
 
 private:
-    std::vector<vector_type> m_points;
-    std::vector<index_type> m_segments;
-    std::vector<index_type> m_loops;
-    std::vector<index_type> m_indecies;
+    struct PathDataPimpl;
+    std::shared_ptr<PathDataPimpl> m_path_data;
 };
 
 template <typename T>

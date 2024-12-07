@@ -35,6 +35,20 @@ struct Vector_Builder<3> {
     }
 };
 
+#pragma mark Builder::PathDataPimpl
+template <typename scalar_type, int rank, typename index_type>
+struct Builder<scalar_type, rank, index_type>::PathDataPimpl {
+    void append(const Loop& l, index_type);
+
+    template <typename T, typename U, typename V>
+    void traverse(T on_loop_begin, U on_segment_end, V on_loop_end) const;
+
+    std::vector<vector_type> m_points;
+    std::vector<index_type> m_segments;
+    std::vector<index_type> m_loops;
+    std::vector<index_type> m_indecies;
+};
+
 #pragma mark Builder::Loop Impl
 
 template <typename scalar_type, int rank, typename index_type>
@@ -89,7 +103,13 @@ void Builder<scalar_type, rank, index_type>::Loop::segment_end(vector_type dest)
 #pragma mark Builder Impl
 
 template <typename scalar_type, int rank, typename index_type>
-void Builder<scalar_type, rank, index_type>::append(const Loop& l, index_type index)
+Builder<scalar_type, rank, index_type>::Builder()
+    : m_path_data(std::make_shared<PathDataPimpl>())
+{
+}
+
+template <typename scalar_type, int rank, typename index_type>
+void Builder<scalar_type, rank, index_type>::PathDataPimpl::append(const Loop& l, index_type index)
 {
     const auto points_base { m_points.size() };
     m_points.insert(m_points.end(), l.m_points.cbegin(), l.m_points.cend());
@@ -103,39 +123,46 @@ void Builder<scalar_type, rank, index_type>::append(const Loop& l, index_type in
 }
 
 template <typename scalar_type, int rank, typename index_type>
+void Builder<scalar_type, rank, index_type>::append(const Loop& l, index_type index)
+{
+    m_path_data->append(l, index);
+}
+
+template <typename scalar_type, int rank, typename index_type>
 void Builder<scalar_type, rank, index_type>::append(const Loop& l)
 {
-    append(l, index_type(m_loops.size()));
+    append(l, index_type(m_path_data->m_loops.size()));
 }
 
 template <typename scalar_type, int rank, typename index_type>
 Span<scalar_type> Builder<scalar_type, rank, index_type>::points() const
 {
-    return { m_points.data()->data(), m_points.size() * rank };
+    return { m_path_data->m_points.data()->data(), m_path_data->m_points.size() * rank };
 }
 
 template <typename scalar_type, int rank, typename index_type>
 Span<index_type> Builder<scalar_type, rank, index_type>::segments() const
 {
-    return { m_segments.data(), m_segments.size() };
+    return { m_path_data->m_segments.data(), m_path_data->m_segments.size() };
 }
 
 template <typename scalar_type, int rank, typename index_type>
 Span<index_type> Builder<scalar_type, rank, index_type>::loops() const
 {
-    return { m_loops.data(), m_loops.size() };
+    return { m_path_data->m_loops.data(), m_path_data->m_loops.size() };
 }
 
 template <typename scalar_type, int rank, typename index_type>
 auto Builder<scalar_type, rank, index_type>::indecies() const -> Span<index_type>
 {
-    return { m_indecies.data(), m_indecies.size() };
+    return { m_path_data->m_indecies.data(), m_path_data->m_indecies.size() };
 }
 
 template <typename scalar_type, int rank, typename index_type>
 template <typename T, typename U, typename V>
-void Builder<scalar_type, rank, index_type>::traverse(T on_loop_begin, U on_segment_end, V on_loop_end) const
+void Builder<scalar_type, rank, index_type>::PathDataPimpl::traverse(T on_loop_begin, U on_segment_end, V on_loop_end) const
 {
+
     ASSERT(m_indecies.size() == m_loops.size());
 
     for (
@@ -159,7 +186,14 @@ void Builder<scalar_type, rank, index_type>::traverse(T on_loop_begin, U on_segm
 }
 
 template <typename scalar_type, int rank, typename index_type>
+template <typename T, typename U, typename V>
+void Builder<scalar_type, rank, index_type>::traverse(T on_loop_begin, U on_segment_end, V on_loop_end) const
+{
+    m_path_data->traverse(on_loop_begin, on_segment_end, on_loop_end);
+}
+
+template <typename scalar_type, int rank, typename index_type>
 std::ostream& Builder<scalar_type, rank, index_type>::write_point_at(size_t index, std::ostream& out) const
 {
-    return Vector_Builder<rank>::write_vector(m_points[index].data(), out);
+    return Vector_Builder<rank>::write_vector(m_path_data->m_points[index].data(), out);
 }
