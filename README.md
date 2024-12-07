@@ -20,7 +20,7 @@ struct Builder {
         friend class Builder;
         void segment_end(vector_type dest);
         std::vector<vector_type> m_points;
-        std::vector<size_t> m_segments;
+        std::vector<index_type> m_segments;
 
     public:
         Loop(scalar_type* begin);
@@ -28,8 +28,10 @@ struct Builder {
         Loop& curve(scalar_type* control, scalar_type* dest);
         Loop& curve(scalar_type* control1, scalar_type* control2, scalar_type* dest);
         Span<scalar_type> points() const;
-        Span<size_t> segments() const;
+        Span<index_type> segments() const;
     };
+
+    Builder();
 
     void append(const Loop& l);
     void append(const Loop& l, index_type);
@@ -40,15 +42,13 @@ struct Builder {
     std::ostream& write_point_at(size_t index, std::ostream&) const;
 
     Span<scalar_type> points() const;
-    Span<size_t> segments() const;
-    Span<size_t> loops() const;
+    Span<index_type> segments() const;
+    Span<index_type> loops() const;
     Span<index_type> indecies() const;
 
 private:
-    std::vector<vector_type> m_points;
-    std::vector<size_t> m_segments;
-    std::vector<size_t> m_loops;
-    std::vector<index_type> m_indecies;
+    struct PathDataPimpl;
+    std::shared_ptr<PathDataPimpl> m_path_data;
 };
 
 template <typename T>
