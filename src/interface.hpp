@@ -5,6 +5,7 @@
 #include <ostream>
 #include <string>
 #include <vector>
+#include <sstream>
 
 namespace path_comp {
 

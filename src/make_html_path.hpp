@@ -1,26 +1,22 @@
 #pragma once
 
-#include <sstream>
-
-using namespace std;
-
 namespace private_path_comp {
 
 template <typename T, typename U, typename V>
-static void start_loop(const T& builder, U begin, V id, ostream& result)
+static void start_loop(const T& builder, U begin, V id, std::ostream& result)
 {
     result << "<path id=\"" << id << "\" d=\"M";
     builder.write_point_at(begin, result);
 }
 
-static void end_loop(ostream& result)
+static void end_loop(std::ostream& result)
 {
     result << "Z\"";
     result << "/>\n";
 }
 
 template <typename T, typename U>
-static void end_segment(const T& builder, U begin, U end, ostream& result)
+static void end_segment(const T& builder, U begin, U end, std::ostream& result)
 {
     switch (end - begin) {
     case 1:
