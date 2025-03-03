@@ -58,9 +58,22 @@ Builder<scalar_type, rank, index_type>::Loop::Loop(scalar_type* begin)
 }
 
 template <typename scalar_type, int rank, typename index_type>
+Builder<scalar_type, rank, index_type>::Loop::Loop(vector_type begin)
+{
+    m_points.push_back(begin);
+}
+
+template <typename scalar_type, int rank, typename index_type>
 auto Builder<scalar_type, rank, index_type>::Loop::line(scalar_type* dest) -> Loop&
 {
     segment_end(Vector_Builder<rank>::make_vector(dest));
+    return *this;
+}
+
+template <typename scalar_type, int rank, typename index_type>
+auto Builder<scalar_type, rank, index_type>::Loop::line(vector_type dest) -> Loop&
+{
+    segment_end(dest);
     return *this;
 }
 
@@ -73,11 +86,28 @@ auto Builder<scalar_type, rank, index_type>::Loop::curve(scalar_type* control, s
 }
 
 template <typename scalar_type, int rank, typename index_type>
+auto Builder<scalar_type, rank, index_type>::Loop::curve(vector_type control, vector_type dest) -> Loop&
+{
+    m_points.push_back(control);
+    segment_end(dest);
+    return *this;
+}
+
+template <typename scalar_type, int rank, typename index_type>
 auto Builder<scalar_type, rank, index_type>::Loop::curve(scalar_type* control1, scalar_type* control2, scalar_type* dest) -> Loop&
 {
     m_points.push_back(Vector_Builder<rank>::make_vector(control1));
     m_points.push_back(Vector_Builder<rank>::make_vector(control2));
     segment_end(Vector_Builder<rank>::make_vector(dest));
+    return *this;
+}
+
+template <typename scalar_type, int rank, typename index_type>
+auto Builder<scalar_type, rank, index_type>::Loop::curve(vector_type control1, vector_type control2, vector_type dest) -> Loop&
+{
+    m_points.push_back(control1);
+    m_points.push_back(control2);
+    segment_end(dest);
     return *this;
 }
 

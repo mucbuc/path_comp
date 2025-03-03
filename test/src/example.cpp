@@ -68,8 +68,33 @@ static void test_new_API()
         });
 }
 
+static void test_non_pointer_API()
+{
+    builder_type b;
+
+    b.append(Loop({ 30, 50 })
+                 .line({ 10, 60 })
+                 .curve({ 50, 20 }, { 100, 100 })
+                 .curve({ 50, 20 }, { 100, 100 }, { 100, 100 })
+                 .line({ 10, 30 }));
+
+    b.traverse(
+        [](auto point_index, auto index) {
+            std::cout << "loop_begin " << index << ": " << point_index << std::endl;
+        },
+        [](auto segment_begin, auto segment_end) {
+            std::cout << "segment_end " << segment_begin << " " << segment_end << std::endl;
+        },
+        [](auto point_index) {
+            std::cout << "loop_end " << point_index << std::endl;
+        });
+
+    std::cout << __PRETTY_FUNCTION__ << std::endl;
+}
+
 int main()
 {
+    test_non_pointer_API();
     test_new_API();
     test_loop();
     test_svg();
