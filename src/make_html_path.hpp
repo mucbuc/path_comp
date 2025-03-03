@@ -24,13 +24,13 @@ static void end_segment(const T& builder, U begin, U end, ostream& result)
 {
     switch (end - begin) {
     case 1:
-        result << "L";
+        result << " L";
         break;
     case 2:
-        result << "Q";
+        result << " Q";
         break;
     case 3:
-        result << "C";
+        result << " C";
         break;
     default:
         ASSERT(false);
@@ -39,7 +39,7 @@ static void end_segment(const T& builder, U begin, U end, ostream& result)
     builder.write_point_at(begin, result);
     ++begin;
     while (begin != end) {
-        result << ", ";
+        result << " ";
         builder.write_point_at(begin, result);
         ++begin;
     }
