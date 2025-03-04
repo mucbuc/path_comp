@@ -5,6 +5,7 @@
 #define ASSERT(p) assert((p))
 
 #include <path_comp/src/interface.hpp>
+#include <asserter/src/test.hpp>
 
 using namespace std;
 
@@ -68,8 +69,57 @@ static void test_new_API()
         });
 }
 
+static void test_non_pointer_API()
+{
+    builder_type b;
+
+    b.append(Loop({ 30, 50 })
+                 .line({ 10, 60 })
+                 .curve({ 50, 20 }, { 100, 100 })
+                 .curve({ 50, 20 }, { 100, 100 }, { 100, 100 })
+                 .line({ 10, 30 }));
+
+    b.traverse(
+        [](auto point_index, auto index) {
+            std::cout << "loop_begin " << index << ": " << point_index << std::endl;
+        },
+        [](auto segment_begin, auto segment_end) {
+            std::cout << "segment_end " << segment_begin << " " << segment_end << std::endl;
+        },
+        [](auto point_index) {
+            std::cout << "loop_end " << point_index << std::endl;
+        });
+
+    std::cout << __PRETTY_FUNCTION__ << std::endl;
+}
+
+static void test_points_and_segments()
+{
+    builder_type b;
+
+    b.append(Loop({ 30, 50 })
+                 .line({ 10, 60 })
+                 .curve({ 50, 20 }, { 100, 100 })
+                 .curve({ 50, 20 }, { 100, 100 }, { 100, 100 })
+                 .line({ 10, 30 }));
+
+    ASSERT( b.points().size == 8 );
+    ASSERT( b.segments().size == 4 );
+
+
+    builder_type c;
+    c.append(Loop({1, 1}));
+
+    ASSERT( c.points().size == 1 );
+    ASSERT( c.segments().size == 0 );
+
+    FOOTER;
+}
+
 int main()
 {
+    test_points_and_segments();
+    test_non_pointer_API();
     test_new_API();
     test_loop();
     test_svg();

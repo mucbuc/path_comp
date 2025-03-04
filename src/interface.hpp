@@ -27,9 +27,17 @@ struct Builder {
 
     public:
         Loop(scalar_type* begin);
+        Loop(vector_type begin);
+
         Loop& line(scalar_type* dest);
+        Loop& line(vector_type dest);
+
         Loop& curve(scalar_type* control, scalar_type* dest);
+        Loop& curve(vector_type control, vector_type dest);
+
         Loop& curve(scalar_type* control1, scalar_type* control2, scalar_type* dest);
+        Loop& curve(vector_type control1, vector_type control2, vector_type dest);
+
         Span<scalar_type> points() const;
         Span<index_type> segments() const;
     };

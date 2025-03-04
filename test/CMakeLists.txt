@@ -13,6 +13,7 @@ set_target_properties(path_comp_sample PROPERTIES
 )
 
 add_subdirectory(lib/path_comp)
+add_subdirectory(lib/asserter)
 
 if (EMSCRIPTEN)
     set_target_properties(path_comp_sample PROPERTIES SUFFIX ".html")
