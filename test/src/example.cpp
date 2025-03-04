@@ -5,6 +5,7 @@
 #define ASSERT(p) assert((p))
 
 #include <path_comp/src/interface.hpp>
+#include <asserter/src/test.hpp>
 
 using namespace std;
 
@@ -104,6 +105,13 @@ static void test_points_and_segments()
 
     ASSERT( b.points().size == 8 );
     ASSERT( b.segments().size == 4 );
+
+
+    builder_type c;
+    c.append(Loop({1, 1}));
+
+    ASSERT( c.points().size == 1 );
+    ASSERT( c.segments().size == 0 );
 
     FOOTER;
 }
