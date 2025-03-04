@@ -92,8 +92,25 @@ static void test_non_pointer_API()
     std::cout << __PRETTY_FUNCTION__ << std::endl;
 }
 
+static void test_points_and_segments()
+{
+    builder_type b;
+
+    b.append(Loop({ 30, 50 })
+                 .line({ 10, 60 })
+                 .curve({ 50, 20 }, { 100, 100 })
+                 .curve({ 50, 20 }, { 100, 100 }, { 100, 100 })
+                 .line({ 10, 30 }));
+
+    ASSERT( b.points().size == 8 );
+    ASSERT( b.segments().size == 4 );
+
+    FOOTER;
+}
+
 int main()
 {
+    test_points_and_segments();
     test_non_pointer_API();
     test_new_API();
     test_loop();

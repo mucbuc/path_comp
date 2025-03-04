@@ -167,7 +167,7 @@ void Builder<scalar_type, rank, index_type>::append(const Loop& l)
 template <typename scalar_type, int rank, typename index_type>
 Span<scalar_type> Builder<scalar_type, rank, index_type>::points() const
 {
-    return { m_path_data->m_points.data()->data(), m_path_data->m_points.size() * rank };
+    return { m_path_data->m_points.data()->data(), m_path_data->m_points.size() };
 }
 
 template <typename scalar_type, int rank, typename index_type>
