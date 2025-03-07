@@ -1,6 +1,7 @@
 #include <iostream>
 #include <sstream>
 
+#include <array> 
 #include <asserter/src/test.hpp>
 #include <path_comp/src/interface.hpp>
 

@@ -1,10 +1,5 @@
 #pragma once
 
-#include <array>
-#include <iostream>
-#include <ostream>
-#include <sstream>
-#include <string>
 #include <vector>
 
 namespace path_comp {
