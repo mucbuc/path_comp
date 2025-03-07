@@ -3,69 +3,32 @@
 #include <array>
 #include <iostream>
 #include <ostream>
+#include <sstream>
 #include <string>
 #include <vector>
-#include <sstream> 
 
 namespace path_comp {
 
-template <typename value_type>
-struct Span {
-    const value_type* data;
-    const size_t size;
-};
+template <typename Vector_t, typename Index_t = uint32_t>
+struct Loop {
+    using scalar_type = typename Vector_t::value_type;
+    using vector_type = Vector_t;
+    using index_type = Index_t;
 
-template <typename scalar_type, int rank = 2, typename index_type = uint32_t>
-struct Builder {
-    using vector_type = std::array<scalar_type, rank>;
+    Loop(vector_type begin);
+    Loop& line(vector_type dest);
+    Loop& curve(vector_type control, vector_type dest);
+    Loop& curve(vector_type control1, vector_type control2, vector_type dest);
 
-    class Loop {
-        friend class Builder;
-        void segment_end(vector_type dest);
-        std::vector<vector_type> m_points;
-        std::vector<index_type> m_segments;
-
-    public:
-        Loop(scalar_type* begin);
-        Loop(vector_type begin);
-
-        Loop& line(scalar_type* dest);
-        Loop& line(vector_type dest);
-
-        Loop& curve(scalar_type* control, scalar_type* dest);
-        Loop& curve(vector_type control, vector_type dest);
-
-        Loop& curve(scalar_type* control1, scalar_type* control2, scalar_type* dest);
-        Loop& curve(vector_type control1, vector_type control2, vector_type dest);
-
-        Span<scalar_type> points() const;
-        Span<index_type> segments() const;
-    };
-
-    Builder();
-
-    void append(const Loop& l);
-    void append(const Loop& l, index_type);
-
-    template <typename T, typename U, typename V>
-    void traverse(T on_loop_begin, U on_segment_end, V on_loop_end) const;
-
-    std::ostream& write_point_at(size_t index, std::ostream&) const;
-
-    Span<scalar_type> points() const;
-    Span<index_type> segments() const;
-    Span<index_type> loops() const;
-    Span<index_type> indecies() const;
+    std::vector<vector_type> points() const;
+    std::vector<index_type> segments() const;
 
 private:
-    struct PathDataPimpl;
-    std::shared_ptr<PathDataPimpl> m_path_data;
+    void segment_end(vector_type dest);
+    std::vector<vector_type> m_points;
+    std::vector<index_type> m_segments;
 };
 
-template <typename T>
-std::string make_html_path(const Builder<T, 2>& builder, std::string name);
-
 #include "impl.hpp"
-#include "make_html_path.hpp"
 
 } // path_comp
