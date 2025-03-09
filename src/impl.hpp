@@ -33,6 +33,12 @@ auto Loop<Vector_t, Index_t>::curve(vector_type control1, vector_type control2, 
 }
 
 template <typename Vector_t, typename Index_t>
+auto Loop<Vector_t, Index_t>::close() -> Loop&
+{
+    return *this;
+}
+
+template <typename Vector_t, typename Index_t>
 auto Loop<Vector_t, Index_t>::points() const -> std::vector<vector_type>
 {
     return m_points;

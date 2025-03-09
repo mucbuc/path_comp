@@ -14,6 +14,7 @@ struct Loop {
     Loop& line(vector_type dest);
     Loop& curve(vector_type control, vector_type dest);
     Loop& curve(vector_type control1, vector_type control2, vector_type dest);
+    Loop& close(); // legacy nop
 
     std::vector<vector_type> points() const;
     std::vector<index_type> segments() const;
