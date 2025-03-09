@@ -26,5 +26,24 @@ private:
     std::vector<index_type> m_segments;
 };
 
+template <typename Loop_t>
+struct Comp {
+    using loop_type = Loop_t;
+    using vector_type = typename Loop_t::vector_type;
+
+    Comp(vector_type size);
+    Comp& insert(loop_type l);
+
+    vector_type& size();
+    vector_type size() const;
+
+    std::vector<loop_type>& loops();
+    std::vector<loop_type> loops() const;
+
+private:
+    vector_type m_size;
+    std::vector<loop_type> m_loops;
+};
+
 } // path_comp
 ```
