@@ -19,9 +19,9 @@ static void test_comp()
                  .line({ 100, 100 })
                  .line({ 10, 30 });
 
-    auto c = comp_type({70, 80}).insert(b);
+    auto c = comp_type({ 70, 80 }).insert(b);
 
-    ASSERT(c.size() == vector_type({70, 80}));
+    ASSERT(c.size() == vector_type({ 70, 80 }));
     ASSERT(c.loops().size() == 1);
     ASSERT(c.loops()[0].points().size() == 6);
 }

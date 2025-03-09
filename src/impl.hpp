@@ -53,38 +53,39 @@ void Loop<Vector_t, Index_t>::segment_end(vector_type dest)
 
 #pragma mark Comp
 
-template<typename Loop_t>
+template <typename Loop_t>
 Comp<Loop_t>::Comp(vector_type size)
-: m_size(size)
-, m_loops()
-{}
-
-template<typename Loop_t>
-Comp<Loop_t> & Comp<Loop_t>::insert(loop_type l)
+    : m_size(size)
+    , m_loops()
 {
-    m_loops.push_back(l);
-    return * this;
 }
 
-template<typename Loop_t>
-auto Comp<Loop_t>::size() -> vector_type &
+template <typename Loop_t>
+Comp<Loop_t>& Comp<Loop_t>::insert(loop_type l)
+{
+    m_loops.push_back(l);
+    return *this;
+}
+
+template <typename Loop_t>
+auto Comp<Loop_t>::size() -> vector_type&
 {
     return m_size;
 }
 
-template<typename Loop_t>
+template <typename Loop_t>
 auto Comp<Loop_t>::size() const -> vector_type
 {
     return m_size;
 }
 
-template<typename Loop_t>
-auto Comp<Loop_t>::loops() -> std::vector<Loop_t> &
+template <typename Loop_t>
+auto Comp<Loop_t>::loops() -> std::vector<Loop_t>&
 {
     return m_loops;
 }
 
-template<typename Loop_t>
+template <typename Loop_t>
 auto Comp<Loop_t>::loops() const -> std::vector<Loop_t>
 {
     return m_loops;
