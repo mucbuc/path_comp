@@ -51,12 +51,13 @@ static void test_points_and_segments()
                  .line({ 10, 30 });
 
     ASSERT(b.points().size() == 8);
-    ASSERT(b.segments().size() == 4);
+    ASSERT(b.segments().size() == 5)
+    (b.segments().size());
 
     auto c = loop_type({ 1, 1 });
 
     ASSERT(c.points().size() == 1);
-    ASSERT(c.segments().size() == 0);
+    ASSERT(c.segments().size() == 1);
 
     FOOTER;
 }

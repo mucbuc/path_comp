@@ -3,9 +3,10 @@
 
 template <typename Vector_t, typename Index_t>
 Loop<Vector_t, Index_t>::Loop(vector_type begin)
-    : m_points(1, begin)
+    : m_points()
     , m_segments()
 {
+    segment_end(begin);
 }
 
 template <typename Vector_t, typename Index_t>
