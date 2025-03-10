@@ -19,8 +19,22 @@ static void test_close()
                  .line({ 10, 60 });
 
     ASSERT(b.points().size() == 2);
-    ASSERT(b.points().size() == b.close().points().size());
-    ASSERT(b.segments().size() == b.close().segments().size());
+    ASSERT(b.segments().size() == 1);
+    b.close();
+
+    ASSERT(b.points().size() == 2);
+    ASSERT(b.segments().size() == 2);
+
+    auto c = loop_type({ 30, 50 })
+                 .line({ 10, 60 })
+                 .line({ 30, 50 });
+
+    ASSERT(c.points().size() == 3);
+    ASSERT(c.segments().size() == 2);
+    c.close();
+
+    ASSERT(c.points().size() == 2)(c.points().size());
+    ASSERT(c.segments().size() == 2);
 
     FOOTER;
 }
@@ -51,13 +65,13 @@ static void test_points_and_segments()
                  .line({ 10, 30 });
 
     ASSERT(b.points().size() == 8);
-    ASSERT(b.segments().size() == 5)
+    ASSERT(b.segments().size() == 4)
     (b.segments().size());
 
     auto c = loop_type({ 1, 1 });
 
     ASSERT(c.points().size() == 1);
-    ASSERT(c.segments().size() == 1);
+    ASSERT(c.segments().size() == 0);
 
     FOOTER;
 }

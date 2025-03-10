@@ -16,11 +16,12 @@ struct Loop {
     Loop& curve(vector_type control1, vector_type control2, vector_type dest);
     Loop& close(); // legacy nop
 
+    std::vector<vector_type> & points();
     std::vector<vector_type> points() const;
+    std::vector<index_type> & segments();
     std::vector<index_type> segments() const;
 
 private:
-    void segment_end(vector_type dest);
     std::vector<vector_type> m_points;
     std::vector<index_type> m_segments;
 };
