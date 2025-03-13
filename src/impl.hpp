@@ -12,7 +12,7 @@ template <typename Vector_t, typename Index_t>
 auto Loop<Vector_t, Index_t>::line(vector_type dest) -> Loop&
 {
     m_points.push_back(dest);
-    m_segments.push_back(2);
+    m_segments.push_back(1);
     return *this;
 }
 
@@ -21,7 +21,7 @@ auto Loop<Vector_t, Index_t>::curve(vector_type control, vector_type dest) -> Lo
 {
     m_points.push_back(control);
     m_points.push_back(dest);
-    m_segments.push_back(3);
+    m_segments.push_back(2);
     return *this;
 }
 
@@ -31,25 +31,23 @@ auto Loop<Vector_t, Index_t>::curve(vector_type control1, vector_type control2, 
     m_points.push_back(control1);
     m_points.push_back(control2);
     m_points.push_back(dest);
-    m_segments.push_back(4);
+    m_segments.push_back(3);
     return *this;
 }
 
 template <typename Vector_t, typename Index_t>
 auto Loop<Vector_t, Index_t>::close() -> Loop&
 {
-    if (points().front() == points().back())
-    {
+    if (points().front() == points().back()) {
         points().pop_back();
-    }
-    else {
+    } else {
         m_segments.push_back(2);
     }
     return *this;
 }
 
 template <typename Vector_t, typename Index_t>
-auto Loop<Vector_t, Index_t>::points() -> std::vector<vector_type> &
+auto Loop<Vector_t, Index_t>::points() -> std::vector<vector_type>&
 {
     return m_points;
 }
@@ -61,7 +59,7 @@ auto Loop<Vector_t, Index_t>::points() const -> std::vector<vector_type>
 }
 
 template <typename Vector_t, typename Index_t>
-auto Loop<Vector_t, Index_t>::segments() -> std::vector<index_type> &
+auto Loop<Vector_t, Index_t>::segments() -> std::vector<index_type>&
 {
     return m_segments;
 }
@@ -71,8 +69,6 @@ auto Loop<Vector_t, Index_t>::segments() const -> std::vector<index_type>
 {
     return m_segments;
 }
-
-
 
 #pragma mark Comp
 

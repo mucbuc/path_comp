@@ -33,7 +33,8 @@ static void test_close()
     ASSERT(c.segments().size() == 2);
     c.close();
 
-    ASSERT(c.points().size() == 2)(c.points().size());
+    ASSERT(c.points().size() == 2)
+    (c.points().size());
     ASSERT(c.segments().size() == 2);
 
     FOOTER;
