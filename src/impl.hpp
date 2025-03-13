@@ -41,7 +41,7 @@ auto Loop<Vector_t, Index_t>::close() -> Loop&
     if (points().front() == points().back()) {
         points().pop_back();
     } else {
-        m_segments.push_back(2);
+        m_segments.push_back(1);
     }
     return *this;
 }
