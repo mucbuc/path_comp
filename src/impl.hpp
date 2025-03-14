@@ -109,3 +109,63 @@ auto Comp<Loop_t>::loops() const -> std::vector<Loop_t>
 {
     return m_loops;
 }
+
+#pragma mark Bounds
+
+template <typename Vector_t>
+bool Bounds<Vector_t>::operator>(vector_type p) const
+{
+    const bool accept_x = m_min[0] < p[0] || m_max[0] > p[0];
+    const bool accept_y = m_min[1] < p[1] || m_max[1] > p[1];
+    return accept_x && accept_y;
+}
+
+template <typename Vector_t>
+bool Bounds<Vector_t>::operator>=(vector_type p) const
+{
+    const bool accept_x = m_min[0] <= p[0] || m_max[0] >= p[0];
+    const bool accept_y = m_min[1] <= p[1] || m_max[1] >= p[1];
+    return accept_x && accept_y;
+}
+
+template <typename Vector_t>
+bool Bounds<Vector_t>::operator<(vector_type p) const
+{
+    const bool accept_x = m_min[0] > p[0] || m_max[0] < p[0];
+    const bool accept_y = m_min[1] > p[1] || m_max[1] < p[1];
+    return accept_x || accept_y;
+}
+
+template <typename Vector_t>
+bool Bounds<Vector_t>::operator<=(vector_type p) const
+{
+    const bool accept_x = m_min[0] >= p[0] || m_max[0] <= p[0];
+    const bool accept_y = m_min[1] >= p[1] || m_max[1] <= p[1];
+    return accept_x || accept_y;
+}
+
+#pragma mark non member functions
+
+template <typename Vector_t, typename Index_t>
+void reverse(Loop<Vector_t, Index_t>& loop)
+{
+    std::reverse(loop.points().begin(), loop.points().end());
+}
+
+template <typename Vector_t, typename Index_t>
+path_comp::Loop<Vector_t, Index_t> make_frame(Bounds<Vector_t> bounds, typename Vector_t::value_type offset)
+{
+    using loop_type = path_comp::Loop<Vector_t, Index_t>;
+
+    const auto left = bounds.m_min[0] + offset;
+    const auto right = bounds.m_max[0] - offset;
+    const auto top = bounds.m_min[1] + offset;
+    const auto bottom = bounds.m_max[1] - offset;
+
+    const auto result = loop_type { { left, top } }
+                            .line({ left, bottom })
+                            .line({ right, bottom })
+                            .line({ right, top })
+                            .close();
+    return result;
+}

@@ -26,6 +26,9 @@ private:
     std::vector<index_type> m_segments;
 };
 
+template <typename Vector_t, typename Index_t>
+void reverse(Loop<Vector_t, Index_t>&);
+
 template <typename Loop_t>
 struct Comp {
     using loop_type = Loop_t;
@@ -44,6 +47,23 @@ private:
     vector_type m_size;
     std::vector<loop_type> m_loops;
 };
+
+template <typename Vector_t>
+struct Bounds {
+
+    using vector_type = Vector_t;
+
+    vector_type m_min;
+    vector_type m_max;
+
+    bool operator>(vector_type) const;
+    bool operator>=(vector_type) const;
+    bool operator<(vector_type) const;
+    bool operator<=(vector_type) const;
+};
+
+template <typename Vector_t, typename Index_t = uint32_t>
+path_comp::Loop<Vector_t, Index_t> make_frame(Bounds<Vector_t>, typename Vector_t::value_type offset = 0);
 
 #include "impl.hpp"
 
