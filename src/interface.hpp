@@ -62,9 +62,6 @@ private:
     std::vector<loop_type> m_loops;
 };
 
-template<class T> 
-std::string make_html_svg(const Comp<T> &, std::string name = "svg");
-
 template <typename Vector_t>
 struct Bounds {
 
@@ -82,6 +79,13 @@ struct Bounds {
 template <typename Vector_t, typename Index_t = uint32_t>
 path_comp::Loop<Vector_t, Index_t> make_frame(Bounds<Vector_t>, typename Vector_t::value_type offset = 0);
 
+template <typename T, typename U>
+std::string make_html_path(const path_comp::Loop<T, U> & builder, std::string name = "svg");
+
+template <typename T>
+std::string make_html_path(const path_comp::Comp<T> & builder, std::string name = "svg");
+
 #include "impl.hpp"
+#include "make_html_path.hpp"
 
 } // path_comp
