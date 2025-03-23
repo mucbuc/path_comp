@@ -2,6 +2,9 @@
 
 #include <vector>
 
+#include <iostream>
+#include <asserter/src/asserter.hpp>
+
 namespace path_comp {
 
 template <typename Vector_t, typename Index_t = uint32_t>
