@@ -62,6 +62,9 @@ private:
     std::vector<loop_type> m_loops;
 };
 
+template<class T> 
+std::string make_html_svg(const Comp<T> &, std::string name = "svg");
+
 template <typename Vector_t>
 struct Bounds {
 
