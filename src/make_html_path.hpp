@@ -35,7 +35,8 @@ static void end_segment(const T& points, U begin, U size, std::ostream& result)
         result << " C";
         break;
     default:
-        ASSERT(false)(begin)(size);
+        ASSERT(false)
+        (begin)(size);
     }
 
     while (size) {
@@ -46,16 +47,14 @@ static void end_segment(const T& points, U begin, U size, std::ostream& result)
     }
 }
 
-
 template <typename T, typename U>
-std::string make_html_path(const path_comp::Loop<T, U> & builder, std::string name)
+std::string make_html_path(const path_comp::Loop<T, U>& builder, std::string name)
 {
     std::stringstream result;
 
     start_loop(builder, name, result);
     U segment_begin = 1;
-    for (auto segment_size : builder.segments())
-    {
+    for (auto segment_size : builder.segments()) {
         end_segment(builder.points(), segment_begin, segment_size, result);
         segment_begin += segment_size;
     }
@@ -65,14 +64,12 @@ std::string make_html_path(const path_comp::Loop<T, U> & builder, std::string na
 }
 
 template <typename T>
-std::string make_html_path(const path_comp::Comp<T> & builder, std::string name)
+std::string make_html_path(const path_comp::Comp<T>& builder, std::string name)
 {
     std::stringstream result;
-    for (auto loop_index = 0; loop_index < builder.loops().size(); ++loop_index)
-    {
+    for (auto loop_index = 0; loop_index < builder.loops().size(); ++loop_index) {
         result << make_html_path(builder.loops()[loop_index], name + std::to_string(loop_index));
     }
-    
+
     return result.str();
 }
-

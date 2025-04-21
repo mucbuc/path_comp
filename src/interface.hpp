@@ -1,14 +1,14 @@
 #pragma once
 
-#include <vector>
-#include <string> 
+#include <iostream>
 #include <sstream>
-#include <iostream>
+#include <string>
+#include <vector>
 
 #include <asserter/src/asserter.hpp>
 
-#include <iostream>
 #include <asserter/src/asserter.hpp>
+#include <iostream>
 
 namespace path_comp {
 
@@ -29,8 +29,8 @@ struct Loop {
     std::vector<index_type>& segments();
     std::vector<index_type> segments() const;
 
-    vector_type max() const; 
-    vector_type min() const; 
+    vector_type max() const;
+    vector_type min() const;
 
     template <typename C>
     Loop<C, Index_t> convert_to() const;
@@ -56,6 +56,7 @@ template <typename Loop_t>
 struct Comp {
     using loop_type = Loop_t;
     using vector_type = typename Loop_t::vector_type;
+    using scalar_type = typename Loop_t::scalar_type;
 
     Comp(vector_type size = { 0, 0 });
     Comp& insert(loop_type l);
@@ -69,12 +70,18 @@ struct Comp {
     template <typename C>
     Comp<Loop<C>> convert_to() const;
 
+    vector_type max() const;
+    vector_type min() const;
+
 private:
     template <typename C>
     friend struct Comp;
 
     vector_type m_size;
     std::vector<loop_type> m_loops;
+
+    vector_type m_max;
+    vector_type m_min;
 };
 
 template <typename Vector_t>
@@ -95,10 +102,10 @@ template <typename Vector_t, typename Index_t = uint32_t>
 path_comp::Loop<Vector_t, Index_t> make_frame(Bounds<Vector_t>, typename Vector_t::value_type offset = 0);
 
 template <typename T, typename U>
-std::string make_html_path(const path_comp::Loop<T, U> & builder, std::string name = "svg");
+std::string make_html_path(const path_comp::Loop<T, U>& builder, std::string name = "svg");
 
 template <typename T>
-std::string make_html_path(const path_comp::Comp<T> & builder, std::string name = "svg");
+std::string make_html_path(const path_comp::Comp<T>& builder, std::string name = "svg");
 
 #include "impl.hpp"
 #include "make_html_path.hpp"

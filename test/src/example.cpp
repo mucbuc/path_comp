@@ -14,7 +14,7 @@ using comp_type = path_comp::Comp<loop_type>;
 static void test_make_html_path()
 {
     auto b = loop_type({ 30, 50 })
-            .line({ 10, 60 });
+                 .line({ 10, 60 });
 
     auto c = comp_type({ 70, 80 }).insert(b);
 
@@ -100,7 +100,7 @@ static void test_points_and_segments()
 
 int main()
 {
-    test_make_html_path(); 
+    test_make_html_path();
     test_convert();
     test_close();
     test_comp();

@@ -5,8 +5,8 @@ template <typename Vector_t, typename Index_t>
 Loop<Vector_t, Index_t>::Loop(vector_type begin)
     : m_points(1, begin)
     , m_segments()
-    , m_max( begin )
-    , m_min( begin )
+    , m_max(begin)
+    , m_min(begin)
 {
     track_extremes(begin);
 }
@@ -27,7 +27,7 @@ auto Loop<Vector_t, Index_t>::curve(vector_type control, vector_type dest) -> Lo
     m_points.push_back(control);
     m_points.push_back(dest);
     m_segments.push_back(2);
-    
+
     track_extremes(dest);
     return *this;
 }
@@ -39,7 +39,7 @@ auto Loop<Vector_t, Index_t>::curve(vector_type control1, vector_type control2, 
     m_points.push_back(control2);
     m_points.push_back(dest);
     m_segments.push_back(3);
-    
+
     track_extremes(dest);
     return *this;
 }
@@ -83,13 +83,13 @@ template <typename Vector_t, typename Index_t>
 auto Loop<Vector_t, Index_t>::max() const -> vector_type
 {
     return m_max;
-} 
+}
 
 template <typename Vector_t, typename Index_t>
 auto Loop<Vector_t, Index_t>::min() const -> vector_type
 {
     return m_min;
-} 
+}
 
 template <typename Vector_t, typename Index_t>
 template <typename C>
@@ -113,8 +113,8 @@ Loop<C, Index_t> Loop<Vector_t, Index_t>::convert_to() const
 template <typename Vector_t, typename Index_t>
 void Loop<Vector_t, Index_t>::track_extremes(vector_type d)
 {
-    m_max = vector_type {{ std::max(d[0], m_max[0]), std::max(d[1], m_max[1]) }};
-    m_min = vector_type {{ std::min(d[0], m_min[0]), std::min(d[1], m_min[1]) }};
+    m_max = vector_type { { std::max(d[0], m_max[0]), std::max(d[1], m_max[1]) } };
+    m_min = vector_type { { std::min(d[0], m_min[0]), std::min(d[1], m_min[1]) } };
 }
 
 #pragma mark Comp
@@ -123,13 +123,23 @@ template <typename Loop_t>
 Comp<Loop_t>::Comp(vector_type size)
     : m_size(size)
     , m_loops()
+    , m_max()
+    , m_min()
 {
+    m_max.fill(std::numeric_limits<scalar_type>::min());
+    m_min.fill(std::numeric_limits<scalar_type>::max());
 }
 
 template <typename Loop_t>
 Comp<Loop_t>& Comp<Loop_t>::insert(loop_type l)
 {
     m_loops.push_back(l);
+
+    for (auto j = 0; j < 2; ++j) {
+        m_min[j] = std::min(m_min[j], l.min()[j]);
+        m_max[j] = std::max(m_max[j], l.max()[j]);
+    }
+
     return *this;
 }
 
@@ -167,6 +177,18 @@ Comp<Loop<C>> Comp<Loop_t>::convert_to() const
         result.m_loops.push_back(loop.template convert_to<C>());
     }
     return result;
+}
+
+template <typename Loop_t>
+auto Comp<Loop_t>::max() const -> vector_type
+{
+    return m_max;
+}
+
+template <typename Loop_t>
+auto Comp<Loop_t>::min() const -> vector_type
+{
+    return m_min;
 }
 
 #pragma mark Bounds
