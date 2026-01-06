@@ -126,7 +126,7 @@ Comp<Loop_t>::Comp(vector_type size)
     , m_max()
     , m_min()
 {
-    m_max.fill(std::numeric_limits<scalar_type>::min());
+    m_max.fill(std::numeric_limits<scalar_type>::lowest());
     m_min.fill(std::numeric_limits<scalar_type>::max());
 }
 
