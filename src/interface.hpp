@@ -7,7 +7,6 @@
 
 #include <asserter/src/asserter.hpp>
 
-#include <asserter/src/asserter.hpp>
 #include <iostream>
 
 namespace path_comp {
@@ -57,6 +56,7 @@ struct Comp {
     using loop_type = Loop_t;
     using vector_type = typename Loop_t::vector_type;
     using scalar_type = typename Loop_t::scalar_type;
+    using index_type = typename Loop_t::index_type;
 
     Comp(vector_type size = { 0, 0 });
     Comp& insert(loop_type l);

@@ -15,7 +15,7 @@ template <typename Vector_t, typename Index_t>
 auto Loop<Vector_t, Index_t>::line(vector_type dest) -> Loop&
 {
     m_points.push_back(dest);
-    m_segments.push_back(1);
+    m_segments.push_back(m_points.size());
 
     track_extremes(dest);
     return *this;
@@ -26,7 +26,7 @@ auto Loop<Vector_t, Index_t>::curve(vector_type control, vector_type dest) -> Lo
 {
     m_points.push_back(control);
     m_points.push_back(dest);
-    m_segments.push_back(2);
+    m_segments.push_back(m_points.size());
 
     track_extremes(dest);
     return *this;
@@ -38,7 +38,7 @@ auto Loop<Vector_t, Index_t>::curve(vector_type control1, vector_type control2, 
     m_points.push_back(control1);
     m_points.push_back(control2);
     m_points.push_back(dest);
-    m_segments.push_back(3);
+    m_segments.push_back(m_points.size());
 
     track_extremes(dest);
     return *this;
@@ -50,7 +50,7 @@ auto Loop<Vector_t, Index_t>::close() -> Loop&
     if (points().front() == points().back()) {
         points().pop_back();
     } else {
-        m_segments.push_back(1);
+        m_segments.push_back(m_points.size());
     }
     return *this;
 }
