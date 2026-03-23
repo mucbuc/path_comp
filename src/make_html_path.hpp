@@ -53,7 +53,7 @@ std::string make_html_path(const path_comp::Loop<T, U>& builder, std::string nam
     std::stringstream result;
 
     start_loop(builder, name, result);
-    U segment_begin = 1;
+    U segment_begin = 0;
     for (auto segment_size : builder.segments()) {
         end_segment(builder.points(), segment_begin, segment_size, result);
         segment_begin += segment_size;
