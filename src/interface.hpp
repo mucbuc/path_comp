@@ -18,6 +18,7 @@ struct Loop {
     using index_type = Index_t;
 
     Loop(vector_type begin);
+    ~Loop();
     Loop& line(vector_type dest);
     Loop& curve(vector_type control, vector_type dest);
     Loop& curve(vector_type control1, vector_type control2, vector_type dest);
@@ -46,6 +47,10 @@ private:
     std::vector<index_type> m_segments;
     vector_type m_max;
     vector_type m_min;
+
+#ifndef NDEBUG
+    bool m_closed = false;
+#endif
 };
 
 template <typename Vector_t, typename Index_t>

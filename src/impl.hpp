@@ -12,10 +12,16 @@ Loop<Vector_t, Index_t>::Loop(vector_type begin)
 }
 
 template <typename Vector_t, typename Index_t>
+Loop<Vector_t, Index_t>::~Loop()
+{
+    ASSERT(m_closed);
+}
+
+template <typename Vector_t, typename Index_t>
 auto Loop<Vector_t, Index_t>::line(vector_type dest) -> Loop&
 {
     m_points.push_back(dest);
-    m_segments.push_back(m_points.size());
+    m_segments.push_back(m_points.size() - 1);
 
     track_extremes(dest);
     return *this;
@@ -26,7 +32,7 @@ auto Loop<Vector_t, Index_t>::curve(vector_type control, vector_type dest) -> Lo
 {
     m_points.push_back(control);
     m_points.push_back(dest);
-    m_segments.push_back(m_points.size());
+    m_segments.push_back(m_points.size() - 1);
 
     track_extremes(dest);
     return *this;
@@ -38,7 +44,7 @@ auto Loop<Vector_t, Index_t>::curve(vector_type control1, vector_type control2, 
     m_points.push_back(control1);
     m_points.push_back(control2);
     m_points.push_back(dest);
-    m_segments.push_back(m_points.size());
+    m_segments.push_back(m_points.size() - 1);
 
     track_extremes(dest);
     return *this;
@@ -49,9 +55,17 @@ auto Loop<Vector_t, Index_t>::close() -> Loop&
 {
     if (points().front() == points().back()) {
         points().pop_back();
+        m_segments.back() = m_points.size();
     } else {
         m_segments.push_back(m_points.size());
     }
+
+    ASSERT(m_segments.back() == m_points.size());
+
+#ifndef NDEBUG
+    m_closed = true;
+#endif
+
     return *this;
 }
 
