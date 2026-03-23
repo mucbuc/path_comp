@@ -20,6 +20,8 @@ Loop<Vector_t, Index_t>::~Loop()
 template <typename Vector_t, typename Index_t>
 auto Loop<Vector_t, Index_t>::line(vector_type dest) -> Loop&
 {
+    ASSERT(!m_closed);
+
     m_points.push_back(dest);
     m_segments.push_back(m_points.size() - 1);
 
@@ -30,6 +32,8 @@ auto Loop<Vector_t, Index_t>::line(vector_type dest) -> Loop&
 template <typename Vector_t, typename Index_t>
 auto Loop<Vector_t, Index_t>::curve(vector_type control, vector_type dest) -> Loop&
 {
+    ASSERT(!m_closed);
+
     m_points.push_back(control);
     m_points.push_back(dest);
     m_segments.push_back(m_points.size() - 1);
@@ -41,6 +45,8 @@ auto Loop<Vector_t, Index_t>::curve(vector_type control, vector_type dest) -> Lo
 template <typename Vector_t, typename Index_t>
 auto Loop<Vector_t, Index_t>::curve(vector_type control1, vector_type control2, vector_type dest) -> Loop&
 {
+    ASSERT(!m_closed);
+
     m_points.push_back(control1);
     m_points.push_back(control2);
     m_points.push_back(dest);
@@ -53,6 +59,8 @@ auto Loop<Vector_t, Index_t>::curve(vector_type control1, vector_type control2, 
 template <typename Vector_t, typename Index_t>
 auto Loop<Vector_t, Index_t>::close() -> Loop&
 {
+    ASSERT(!m_closed);
+    
     if (    !points().empty()
         &&  !segments().empty()
         &&  points().front() == points().back()) {
