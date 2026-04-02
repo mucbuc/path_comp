@@ -59,22 +59,21 @@ auto Loop<Vector_t, Index_t>::curve(vector_type control1, vector_type control2, 
 template <typename Vector_t, typename Index_t>
 auto Loop<Vector_t, Index_t>::close() -> Loop&
 {
-    ASSERT(!m_closed);
-    
-    if (    !points().empty()
-        &&  !segments().empty()
-        &&  points().front() == points().back()) {
-        points().pop_back();
-        segments().back() = points().size();
-    } else {
-        segments().push_back(points().size());
+    if (!m_closed)
+    {
+        if (    !points().empty()
+            &&  !segments().empty()
+            &&  points().front() == points().back()) {
+            points().pop_back();
+            segments().back() = points().size();
+        } else {
+            segments().push_back(points().size());
+        }
+
+        ASSERT(m_segments.back() == m_points.size());
+
+        m_closed = true;
     }
-
-    ASSERT(m_segments.back() == m_points.size());
-
-#ifndef NDEBUG
-    m_closed = true;
-#endif
 
     return *this;
 }

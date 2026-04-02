@@ -48,9 +48,7 @@ private:
     vector_type m_max;
     vector_type m_min;
 
-#ifndef NDEBUG
     bool m_closed = false;
-#endif
 };
 
 template <typename Vector_t, typename Index_t>
