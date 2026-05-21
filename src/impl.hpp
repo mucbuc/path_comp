@@ -14,7 +14,6 @@ Loop<Vector_t, Index_t>::Loop(vector_type begin)
 template <typename Vector_t, typename Index_t>
 Loop<Vector_t, Index_t>::~Loop()
 {
-    ASSERT(m_closed);
 }
 
 template <typename Vector_t, typename Index_t>

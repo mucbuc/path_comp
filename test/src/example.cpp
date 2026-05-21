@@ -42,8 +42,8 @@ static void test_close()
 {
     // make sure that close is a no op
 
-    auto b = loop_type({ 30, 50 });
-    b.line({ 10, 60 });
+    auto b = loop_type({ 30, 50 })
+                 .line({ 10, 60 });
 
     ASSERT(b.points().size() == 2);
     ASSERT(b.segments().size() == 1);
@@ -52,9 +52,9 @@ static void test_close()
     ASSERT(b.points().size() == 2);
     ASSERT(b.segments().size() == 2);
 
-    auto c = loop_type({ 30, 50 });
-    c.line({ 10, 60 })
-        .line({ 30, 50 });
+    auto c = loop_type({ 30, 50 })
+                 .line({ 10, 60 })
+                 .line({ 30, 50 });
 
     ASSERT(c.points().size() == 3);
     ASSERT(c.segments().size() == 2);
@@ -86,12 +86,11 @@ static void test_comp()
 
 static void test_points_and_segments()
 {
-    auto b = loop_type({ 30, 50 });
-
-    b.line({ 10, 60 })
-        .curve({ 50, 20 }, { 100, 100 })
-        .curve({ 50, 20 }, { 100, 100 }, { 100, 100 })
-        .line({ 10, 30 });
+    auto b = loop_type({ 30, 50 })
+                 .line({ 10, 60 })
+                 .curve({ 50, 20 }, { 100, 100 })
+                 .curve({ 50, 20 }, { 100, 100 }, { 100, 100 })
+                 .line({ 10, 30 });
 
     ASSERT(b.points().size() == 8);
     ASSERT(b.segments().size() == 4)
