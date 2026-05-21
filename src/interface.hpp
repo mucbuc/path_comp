@@ -39,7 +39,7 @@ private:
     template <typename C, typename I>
     friend struct Loop;
 
-    Loop() = delete;
+    Loop() = default; // delete;
 
     void track_extremes(vector_type);
 

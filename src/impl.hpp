@@ -59,11 +59,10 @@ auto Loop<Vector_t, Index_t>::curve(vector_type control1, vector_type control2, 
 template <typename Vector_t, typename Index_t>
 auto Loop<Vector_t, Index_t>::close() -> Loop&
 {
-    if (!m_closed)
-    {
-        if (    !points().empty()
-            &&  !segments().empty()
-            &&  points().front() == points().back()) {
+    if (!m_closed) {
+        if (!points().empty()
+            && !segments().empty()
+            && points().front() == points().back()) {
             points().pop_back();
             segments().back() = points().size();
         } else {
@@ -118,6 +117,8 @@ template <typename Vector_t, typename Index_t>
 template <typename C>
 Loop<C, Index_t> Loop<Vector_t, Index_t>::convert_to() const
 {
+    ASSERT(m_closed);
+
     Loop<C, Index_t> result;
 
     result.m_points.reserve(m_points.size());
@@ -129,6 +130,8 @@ Loop<C, Index_t> Loop<Vector_t, Index_t>::convert_to() const
     for (auto segments : m_segments) {
         result.m_segments.push_back(segments);
     }
+
+    result.m_closed = true;
 
     return result;
 }
